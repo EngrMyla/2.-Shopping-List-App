@@ -22,7 +22,7 @@ py shopping_list.py
 - Python 3.x
 
 ### Project Status
-- This Project is still in Progress.
+- This Project is Completed.
 
 ### Builder Notes
 ```text
