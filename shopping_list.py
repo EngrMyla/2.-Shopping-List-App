@@ -10,7 +10,12 @@ def check_empty_list():
 
 ## Get Item by Choice Function
 def get_item_by_choice(prompt):
-    choice = int(input(prompt))
+    try:
+        choice = int(input(prompt))
+    except ValueError:
+        print("Please enter a valid integer.")
+        return None
+
     shopping_items = list(shopping_list.items())
     if choice <= 0 or choice > len(shopping_items):
         print("Invalid item number.")
@@ -30,10 +35,9 @@ def get_valid_quantity(prompt):
             print("Please enter a valid integer for the quantity.")
 
 
-
+# Core Functions
 # 1. Add Item and Quantity Function
 def add_item_qty():
-    check_empty_list()
     while True:
         shopping_item = input("Enter the item name: ").strip().upper()
         if shopping_item:
@@ -46,20 +50,22 @@ def add_item_qty():
 
 # 2. View List Function
 def view_list():
-    check_empty_list()
+    if check_empty_list():
+        return
+    
     print("\nShopping List:")
+    
     for index, (shopping_item, quantity) in enumerate(shopping_list.items(), start=1):
-            print(f"{index}. {shopping_item}: {quantity}")
+        print(f"{index}. {shopping_item}: {quantity}")
 
 # 3. Sort Items by Quantity Function
 def sort_items_by_qty():
     if check_empty_list():
         return
-    else:
-        sorted_items = sorted(shopping_list.items(), key=lambda x: x[1]) #, reverse=True
-        print("\nShopping List Sorted by Quantity:")
-        for shopping_item, quantity in sorted_items:
-            print(f"{shopping_item}: {quantity}")
+    sorted_items = sorted(shopping_list.items(), key=lambda x: x[1]) #, reverse=True
+    print("\nShopping List Sorted by Quantity:")
+    for shopping_item, quantity in sorted_items:
+        print(f"{shopping_item}: {quantity}")
 
 # 4. Update Item and Quantity Function
 def update_item_qty():
@@ -79,9 +85,11 @@ def update_item_qty():
 
 # 5. Remove Item from List Function
 def remove_item():
+    if check_empty_list():
+        return
     view_list()
 
-    selected_item = get_item_by_choice("\nEnter the item number to update: ")
+    selected_item = get_item_by_choice("\nEnter the item number to remove ")
     if selected_item is None:
         return
 
